@@ -46,18 +46,20 @@ embedding = [0.24, -1.12, 0.83, ...]
 ---
 
 ## 3. Transformer Layers
+#### Transformer layers allow tokens to understand their relationship with other tokens and progressively build a richer context.
 
-### i. Multi-Head Self-Attention
+### i. Self-Attention
 
-Each token asks: *"Which other tokens should I pay attention to?"*
+Figures out:
+Which other tokens should I pay attention to?
 
 **Example:** `"Animal didn't cross the road, because it was tired"`
 
 - `"it"` attends strongly to `"Animal"`, weakly to `"road"`
 - Lets the model understand relationships across thousands of tokens
 
-### ii. Feed-Forward Network (FFN)
-
+### ii. Feed-Forward Network
+After attention has collected information, the model needs to process that information.
 - Applied after attention
 - Acts as a **key-value memory store** for factual knowledge
 
