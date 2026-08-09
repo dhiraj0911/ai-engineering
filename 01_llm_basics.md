@@ -41,6 +41,7 @@ Each token ID maps to a dense vector — a richer numerical representation of me
 token_id  = 8421   # "pizza"
 embedding = [0.24, -1.12, 0.83, ...]
 ```
+##### An embedding is a way of representing text as a vector of numbers so that a computer can understand and compare its semantic meaning.
 
 ---
 
