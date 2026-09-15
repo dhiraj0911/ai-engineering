@@ -59,9 +59,9 @@ def decide_categorie(text):
     return response
 
 def saveMemory(result):
-    if result["type"] == "PROFILE" or result["type"] == "PREFERENCE":
+    if result["type"] == "PROFILE" or result["type"] == "PREFERENCE" or result["type"] == "FACT" or result["type"] == "GOAL" :
         save_db(result["memory"])
-    elif result["type"] == "FACT" or result["type"] == "GOAL" or result["type"] == "TEMPORARY":
+    elif result["type"] == "TEMPORARY":
         messages.append({
             "preference": result["type"],
             "memory": result["memory"],
