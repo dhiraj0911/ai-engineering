@@ -13,6 +13,9 @@ def search_db(id):
         "data": "temp data"
     }
 
+def save_db(memory):
+    return "saved"
+
 def calculate(a, b, ops):
     if ops == "+":
         return a + b
@@ -25,6 +28,46 @@ def calculate(a, b, ops):
     else:
         raise ValueError(f"Unsupported operation: {ops}")
 
+
+def decide_categorie(text):
+    prompt = """
+        Analyze above message.
+        Determine whether it contains information worth
+        remembering across future conversations.
+
+        Categories:
+        - NONE
+        - PROFILE
+        - PREFERENCE
+        - GOAL
+        - FACT
+        - TEMPORARY
+
+        Return following structured JSON.
+        {
+            "should_remember": boolean,
+            "type": One categories,
+            "memory": Result to store,
+            "importance": from 0 to 1 (higher number more importance)
+        }
+    """
+
+    response = client.call(
+        model="haiku",
+        messages=text + prompt
+    )
+
+def saveMemory(result):
+    if result["type"] == "PROFILE" or result["type"] == "PREFERENCE":
+        save_db(result["memory"])
+    elif result["type"] == "FACT" or result["type"] == "GOAL" or result["type"] == "TEMPORARY":
+        messages.append({
+            "preference": result["type"],
+            "memory": result["memory"],
+            "importance": result["importance"]
+        })
+    else:
+        return None
 
 def execute_tool(name, args):
     if name == "get_weather":
@@ -126,6 +169,9 @@ messages.append({
 # ---------------------------------------
 # First LLM call
 # ---------------------------------------
+
+memory = decide_categorie(user_query)
+saveMemory(memory)
 
 response = client.call(
     model=model,
