@@ -56,6 +56,7 @@ def decide_categorie(text):
         model="haiku",
         messages=text + prompt
     )
+    return response
 
 def saveMemory(result):
     if result["type"] == "PROFILE" or result["type"] == "PREFERENCE":
